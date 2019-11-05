@@ -40,7 +40,8 @@ class InteractiveRecord
     DB[:conn].execute(sql)
 
     @id = DB[:conn].execute("SELECT last_insert_rowid() FROM #{table_name_for_insert}")[0][0]
-  self
+
+    self
   end
 
   def table_name_for_insert
@@ -78,7 +79,8 @@ class InteractiveRecord
       WHERE #{column_name} = ?
       SQL
 
-    DB[:conn].execute(sql, value_name);
+    DB[:conn].execute(sql, value_name).map do |row|
+      self.ne
   end
 
 end
