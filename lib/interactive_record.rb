@@ -56,7 +56,17 @@ class InteractiveRecord
     end
 
     def self.find_by(student_hash)
-        # sql = "SELECT * FROM #{self.table_name} WHERE name = ?"
-        # DB[:conn].execute(sql, name)
-      end
+        table_name = self.table_name
+        sql = "SELECT * FROM #{table_name} WHERE " 
+      
+        values = []
+        student_hash.each do |key, value|
+            condition = "#{key} = '" + value + "' AND "
+            sql <<  condition
+        end
+        
+        sql.gsub!(/ AND \z/,'')
+        #binding.pry
+        DB[:conn].execute(sql)
+    end
 end
