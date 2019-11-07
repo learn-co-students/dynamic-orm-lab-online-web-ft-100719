@@ -61,7 +61,11 @@ class InteractiveRecord
       
         values = []
         student_hash.each do |key, value|
-            condition = "#{key} = '" + value + "' AND "
+            if value.is_a?(String)
+                condition = "#{key} = '" + value + "' AND "
+            else
+                condition = "#{key} = #{value} AND "
+            end
             sql <<  condition
         end
         
