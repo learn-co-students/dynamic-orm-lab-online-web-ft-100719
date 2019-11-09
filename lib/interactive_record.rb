@@ -52,7 +52,7 @@ class InteractiveRecord
     
     def self.find_by_name(name)
       sql = "SELECT * FROM #{self.table_name} WHERE name = ?"
-      DB[:conn].execute(sql, name)[0]
+      DB[:conn].execute(sql, name)
     end
 
     def self.find_by(x)
@@ -61,7 +61,7 @@ class InteractiveRecord
     
         sql = "SELECT * FROM #{table_name}
         WHERE #{column_name} = ?"
-        
+
         DB[:conn].execute(sql, value);
     end
     
