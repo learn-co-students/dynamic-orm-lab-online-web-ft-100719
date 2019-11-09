@@ -26,7 +26,10 @@ class InteractiveRecord
       end
     
       def save
-        sql = "INSERT INTO #{table_name_for_insert} (#{col_names_for_insert}) VALUES (#{values_for_insert})"
+        sql = <<-SQL
+        INSERT INTO #{table_name_for_insert}(#{col_names_for_insert}) 
+        VALUES (#{values_for_insert})
+        SQL
         DB[:conn].execute(sql)
         @id = DB[:conn].execute("SELECT last_insert_rowid() FROM #{table_name_for_insert}")[0][0]
       end
@@ -52,9 +55,14 @@ class InteractiveRecord
       DB[:conn].execute(sql, name)[0]
     end
 
-    def self.find_by(name:, grade:)
-        sql = "SELECT * FROM #{self.table_name} WHERE name = ? AND grade = ?"
-        DB[:conn].execute(sql, name, grade)
+    def self.find_by(x)
+        column_name = x.keys[0].to_s
+        value = x.values[0]
+    
+        sql = "SELECT * FROM #{table_name}
+        WHERE #{column_name} = ?"
+        
+        DB[:conn].execute(sql, value);
     end
     
 end
