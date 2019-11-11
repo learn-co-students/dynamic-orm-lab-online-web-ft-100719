@@ -59,7 +59,7 @@ class InteractiveRecord
         # binding.pry
         sql= <<-SQL
         SELECT * FROM #{self.table_name}
-        WHERE #{info.flatten[0].to_s.split(":")[0]}=#{info.flatten[1]}
+        WHERE #{info.flatten[0].to_s}="#{info.flatten[1]}"
         SQL
         DB[:conn].execute(sql)
     end
